@@ -85,7 +85,7 @@ It is also a perfectly ordinary, fast SSH client if you just want a shell.
 
 ## 📦 Install
 
-**Android:** grab the APK from the [latest release](https://github.com/Jhongdlp/Kammel_ssh/releases/latest). After that the app updates itself.
+**Android:** grab the APK from the [latest release](https://github.com/AliOmarAbdelhady/Kammel_ssh/releases/latest). After that the app updates itself.
 
 **Linux:** build from source (below).
 
@@ -109,7 +109,7 @@ It is also a perfectly ordinary, fast SSH client if you just want a shell.
 ### Build and run
 
 ```bash
-git clone https://github.com/Jhongdlp/Kammel_ssh.git
+git clone https://github.com/AliOmarAbdelhady/Kammel_ssh.git
 cd Kammel_ssh
 
 flutter pub get
@@ -137,6 +137,27 @@ flutter build linux        # Linux
 - `targetSdk` is intentionally pinned to **28** in `android/app/build.gradle.kts` for legacy shared-storage compatibility.
 - `MainActivity` must stay a `FlutterFragmentActivity`; `local_auth` needs it for the app lock.
 - The terminal uses a **vendored, patched copy of `xterm`** at `third_party/xterm`, wired in through `dependency_overrides`. Keyboard suggestions, dictation and inline image paste live there, not upstream.
+
+## 🌍 Reach your laptop from anywhere with Tailscale
+
+The app talks to whatever host you put in a profile, so your laptop's
+Tailscale address works exactly like a LAN IP — from any network in the
+world, with no port forwarding and no public IP:
+
+1. Install [Tailscale](https://tailscale.com/) on both the laptop and the
+   phone, and sign both into the same tailnet.
+2. On the laptop run `tailscale ip -4` (or `tailscale status`) to get its
+   `100.x.y.z` address; with MagicDNS enabled you can use its hostname
+   (`laptop-name.tailnet.ts.net`) instead.
+3. In KAMMEL SSH create a profile with that address (or hostname) as
+   **HOST / IP** — done. Keep the Tailscale app connected on the phone; the
+   profile list shows a `TS` badge on Tailscale hosts, and the profile form
+   reminds you the VPN must be active.
+
+Tip: on the laptop, enable `ssh` before leaving home
+(`sudo systemctl enable --now ssh`) and consider turning on Tailscale's
+**key expiry never** for the laptop's machine so it never silently drops
+off the tailnet.
 
 ## 🏗 Architecture overview
 

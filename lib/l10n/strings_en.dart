@@ -808,6 +808,10 @@ const Map<String, String> enStrings = {
   'PRIMERA CONEXIÓN CON ESTE SERVIDOR': 'FIRST CONNECTION TO THIS SERVER',
   'PROBAR NOTIFICACIÓN': 'TEST NOTIFICATION',
   'PROD': 'PROD',
+  'TS': 'TS',
+  'Conexión vía Tailscale': 'Connection over Tailscale',
+  'Host de Tailscale: la VPN de Tailscale debe estar activa en este teléfono para conectar.':
+      'Tailscale host: the Tailscale VPN must be active on this phone to connect.',
   'PROMEDIO': 'AVERAGE',
   'PROMPT': 'PROMPT',
   'PROMPTS': 'PROMPTS',

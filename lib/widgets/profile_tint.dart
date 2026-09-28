@@ -95,6 +95,27 @@ class ProdBadge extends StatelessWidget {
   }
 }
 
+/// `TS` chip marking a profile whose host is a Tailscale address (see
+/// [ConnectionProfile.isTailscaleHost]). Same outlined language as [ProdBadge].
+/// Neutral ink, not a tint: it describes *how* the machine is reached, not how
+/// critical it is.
+class TailscaleBadge extends StatelessWidget {
+  final Color? tint;
+
+  const TailscaleBadge({super.key, this.tint});
+
+  @override
+  Widget build(BuildContext context) {
+    final color = tint ?? AppColors.muted;
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
+      decoration: BoxDecoration(border: Border.all(color: color, width: 1)),
+      child: Text(tr('TS'),
+          style: AppText.mono(8, color: color, spacing: 0.8)),
+    );
+  }
+}
+
 /// Swatch row used by the profile form: the presets, a custom slot and "none".
 class ProfileColorPicker extends StatelessWidget {
   final String? selectedHex;

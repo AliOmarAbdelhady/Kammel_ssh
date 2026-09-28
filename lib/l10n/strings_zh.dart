@@ -796,6 +796,10 @@ const Map<String, String> zhStrings = {
   'PRIMERA CONEXIÓN CON ESTE SERVIDOR': '首次连接此服务器',
   'PROBAR NOTIFICACIÓN': '测试通知',
   'PROD': '生产',
+  'TS': 'TS',
+  'Conexión vía Tailscale': '通过 Tailscale 连接',
+  'Host de Tailscale: la VPN de Tailscale debe estar activa en este teléfono para conectar.':
+      'Tailscale 主机：需要在本机开启 Tailscale VPN 才能连接。',
   'PROMEDIO': '平均值',
   'PROMPT': '提示词',
   'PROMPTS': '提示词',

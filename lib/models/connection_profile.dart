@@ -127,6 +127,27 @@ class ConnectionProfile {
     this.jumpProfileId,
   });
 
+  /// True when the host is reached over Tailscale: either an IP inside the
+  /// CGNAT block Tailscale assigns (100.64.0.0/10) or a MagicDNS name
+  /// (`machine.tailnet.ts.net`). Such hosts are only routable while the
+  /// phone's Tailscale VPN is up, which is why they get a badge in the list
+  /// and a reminder in the profile form.
+  bool get isTailscaleHost => looksLikeTailscaleHost(host);
+
+  /// [isTailscaleHost] for raw input, so the profile form can react to what
+  /// the user is typing before anything is saved.
+  static bool looksLikeTailscaleHost(String host) {
+    final h = host.trim().toLowerCase();
+    if (h.isEmpty) return false;
+    if (h.endsWith('.ts.net')) return true;
+    final parts = h.split('.');
+    if (parts.length != 4) return false;
+    final octets = parts.map((p) => int.tryParse(p)).toList();
+    if (octets.any((o) => o == null || o < 0 || o > 255)) return false;
+    // 100.64.0.0/10 → second octet 64–127.
+    return octets[0] == 100 && octets[1]! >= 64 && octets[1]! <= 127;
+  }
+
   /// tmux session name used when [useTmux] is on: a slug of the profile name
   /// (single-quote-safe, since it's interpolated into the remote command),
   /// prefixed so it's recognizable in `tmux ls`.

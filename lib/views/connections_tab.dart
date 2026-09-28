@@ -380,6 +380,14 @@ class _ConnectionsTabState extends State<ConnectionsTab> {
               padding: const EdgeInsets.only(right: 6),
               child: ProdBadge(tint: tint),
             ),
+          if (profile.isTailscaleHost)
+            Padding(
+              padding: const EdgeInsets.only(right: 6),
+              child: Tooltip(
+                message: tr('Conexión vía Tailscale'),
+                child: TailscaleBadge(tint: tint),
+              ),
+            ),
           if (favorite)
             Padding(
               padding: const EdgeInsets.only(right: 6),
@@ -1048,6 +1056,36 @@ class _ConnectionsTabState extends State<ConnectionsTab> {
                             mono: true, number: true),
                       ),
                     ],
+                  ),
+                  // Reacts to typing (the sheet itself only rebuilds on
+                  // setSheetState): a Tailscale host is only reachable while
+                  // the phone's VPN is up, and the connect error says nothing
+                  // about that.
+                  ValueListenableBuilder<TextEditingValue>(
+                    valueListenable: hostController,
+                    builder: (context, value, _) {
+                      if (!ConnectionProfile.looksLikeTailscaleHost(value.text)) {
+                        return const SizedBox.shrink();
+                      }
+                      return Padding(
+                        padding: const EdgeInsets.only(top: 6),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Icon(Icons.vpn_lock,
+                                size: 12, color: AppColors.faint),
+                            const SizedBox(width: 6),
+                            Expanded(
+                              child: Text(
+                                tr('Host de Tailscale: la VPN de Tailscale debe estar activa en este teléfono para conectar.'),
+                                style: AppText.label(8.5,
+                                    color: AppColors.faint, spacing: 0.3),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
                   ),
                   const SizedBox(height: 12),
                   _field(usernameController, tr('USUARIO'), mono: true),

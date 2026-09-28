@@ -10,7 +10,12 @@ import '../l10n/l10n.dart';
 
 /// Owner/repo whose GitHub Releases host the distributed APKs. The "latest"
 /// release endpoint is public (no token required) for public repositories.
-const String _kRepo = 'Jhongdlp/Kammel_ssh';
+///
+/// Must match the repo this build is distributed from: the downloaded APK is
+/// installed over the running app, which only works when both are signed with
+/// the same key. Pointing at upstream from a fork would offer APKs the phone
+/// would refuse to install.
+const String _kRepo = 'AliOmarAbdelhady/Kammel_ssh';
 
 /// Metadata about a release that is newer than the installed build.
 class AppUpdate {
