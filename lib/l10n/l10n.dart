@@ -42,9 +42,21 @@ class L10n {
 
   /// Reads the stored language. Call before `runApp` so the first frame is
   /// already in the right language.
+  ///
+  /// With nothing stored (first launch) the app follows the device locale
+  /// instead of forcing Spanish: a phone set to English opening in Spanish
+  /// reads as a bug, and the picker under Ajustes is the last place someone
+  /// looks. Falls back to Spanish for locales the app doesn't ship.
   static Future<void> load() async {
     final prefs = await SharedPreferences.getInstance();
-    notifier.value = AppLang.fromCode(prefs.getString(_prefsKey));
+    final stored = prefs.getString(_prefsKey);
+    if (stored != null) {
+      notifier.value = AppLang.fromCode(stored);
+      return;
+    }
+    final device = PlatformDispatcher.instance.locale.languageCode;
+    notifier.value =
+        AppLang.values.firstWhere((l) => l.code == device, orElse: () => AppLang.es);
   }
 
   static Future<void> setLang(AppLang lang) async {
