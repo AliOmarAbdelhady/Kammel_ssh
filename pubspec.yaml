@@ -62,7 +62,7 @@ dependencies:
   permission_handler: ^12.0.1
   # Open URLs detected in the terminal in the external browser.
   url_launcher: ^6.3.2
-  pdfrx: ^2.2.24
+  pdfrx: ^2.6.5
   # SVG rendering for the embedded image viewer (raster formats use
   # Image.memory directly).
   flutter_svg: ^2.2.0
